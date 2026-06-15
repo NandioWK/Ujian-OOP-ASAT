@@ -1,35 +1,87 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>Sistem Perhitungan Ojek Online</title>
-
     <style>
         body {
-            background-color: #ffffff;
-            color: #000000;
-            font-family: sans-serif;
-            text-align: center;
-            padding: 20px;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: #333;
         }
+
+        h1 {
+            color: #ffc107;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         form {
-            display: inline-block;
-            text-align: left;
-        }
-        button {
-            background-color: green;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            cursor: pointer;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             width: 100%;
+            max-width: 400px;
         }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            background: #fafafa;
+        }
+
+        button {
+            background-color: #ffc107;
+            color: #000;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e0a800;
+        }
+
         .hasil {
-            display: inline-block;
-            text-align: left;
-            margin-top: 20px;
-            border: 1px solid #000;
-            padding: 15px;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            margin-top: 30px;
+            width: 100%;
+            max-width: 400px;
+            border-left: 6px solid #ffc107;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #ef9a9a;
         }
     </style>
 </head>
@@ -38,40 +90,33 @@
 <h1>Sistem Ojek Online</h1>
 
 <form action="" method="POST">
-    <p>
-        <label>Nama Pelanggan:</label><br>
-        <input type="text" id="nama" name="Nama_Pelanggan" placeholder="Masukin Nama Pelanggan" value="<?php echo isset($_POST['Nama_Pelanggan']) ? htmlspecialchars($_POST['Nama_Pelanggan']) : ''; ?>">
-    </p>
-    <p>
-        <label>No HP:</label><br>
-        <input type="number" id="no_hp" name="No_HP" placeholder="Masukkin No HP" value="<?php echo isset($_POST['No_HP']) ? htmlspecialchars($_POST['No_HP']) : ''; ?>">
-    </p>
-    <p>
-        <label>Jarak Tempuh (km):</label><br>
-        <input type="number" id="jarak" name="Jarak_Tempuh" step="0.1" placeholder="Masukkin Jarak Tempuh (km)" value="<?php echo isset($_POST['Jarak_Tempuh']) ? htmlspecialchars($_POST['Jarak_Tempuh']) : ''; ?>">
-    </p>
-    <p>
-        <label>Kode Voucher:</label><br>
-        <input type="text" id="voucher" name="Kode_Voucher" placeholder="Masukkin Kode Voucher" value="<?php echo isset($_POST['Kode_Voucher']) ? htmlspecialchars($_POST['Kode_Voucher']) : ''; ?>">
-    </p>
-    <p>
-        <label>Jenis Layanan:</label><br>
-        <select name="Jenis_Layanan">
-            <option value="Goride Reguler" <?php echo (isset($_POST['Jenis_Layanan']) && $_POST['Jenis_Layanan'] == 'Goride Reguler') ? 'selected' : ''; ?>>Goride Reguler</option>
-            <option value="Goride Prioritas" <?php echo (isset($_POST['Jenis_Layanan']) && $_POST['Jenis_Layanan'] == 'Goride Prioritas') ? 'selected' : ''; ?>>Goride Prioritas</option>
-            <option value="Gocar" <?php echo (isset($_POST['Jenis_Layanan']) && $_POST['Jenis_Layanan'] == 'Gocar') ? 'selected' : ''; ?>>Gocar</option>
-            <option value="Gocar XL" <?php echo (isset($_POST['Jenis_Layanan']) && $_POST['Jenis_Layanan'] == 'Gocar XL') ? 'selected' : ''; ?>>Gocar XL</option>
-            <option value="Gofood" <?php echo (isset($_POST['Jenis_Layanan']) && $_POST['Jenis_Layanan'] == 'Gofood') ? 'selected' : ''; ?>>Gofood</option>
-        </select>
-    </p>
-    <p>
-        <label>Metode Pembayaran:</label><br>
-        <select name="Metode_Pembayaran">
-            <option value="cash" <?php echo (isset($_POST['Metode_Pembayaran']) && $_POST['Metode_Pembayaran'] == 'cash') ? 'selected' : ''; ?>>Cash</option>
-            <option value="ewallet" <?php echo (isset($_POST['Metode_Pembayaran']) && $_POST['Metode_Pembayaran'] == 'ewallet') ? 'selected' : ''; ?>>E-Wallet</option>
-            <option value="transfer_bank" <?php echo (isset($_POST['Metode_Pembayaran']) && $_POST['Metode_Pembayaran'] == 'transfer_bank') ? 'selected' : ''; ?>>Transfer Bank</option>
-        </select>
-    </p>
+    <label>Nama Pelanggan:</label>
+    <input type="text" name="Nama_Pelanggan" placeholder="Nama Lengkap" value="<?php echo isset($_POST['Nama_Pelanggan']) ? htmlspecialchars($_POST['Nama_Pelanggan']) : ''; ?>" required>
+
+    <label>No HP:</label>
+    <input type="number" name="No_HP" placeholder="08..." value="<?php echo isset($_POST['No_HP']) ? htmlspecialchars($_POST['No_HP']) : ''; ?>" required>
+
+    <label>Jarak Tempuh (km):</label>
+    <input type="number" name="Jarak_Tempuh" step="0.1" placeholder="Contoh: 5.5" value="<?php echo isset($_POST['Jarak_Tempuh']) ? htmlspecialchars($_POST['Jarak_Tempuh']) : ''; ?>" required>
+
+    <label>Kode Voucher:</label>
+    <input type="text" name="Kode_Voucher" placeholder="Opsional" value="<?php echo isset($_POST['Kode_Voucher']) ? htmlspecialchars($_POST['Kode_Voucher']) : ''; ?>">
+
+    <label>Jenis Layanan:</label>
+    <select name="Jenis_Layanan">
+        <option value="Goride Reguler">Goride Reguler</option>
+        <option value="Goride Prioritas">Goride Prioritas</option>
+        <option value="Gocar">Gocar</option>
+        <option value="Gocar XL">Gocar XL</option>
+        <option value="Gofood">Gofood</option>
+    </select>
+
+    <label>Metode Pembayaran:</label>
+    <select name="Metode_Pembayaran">
+        <option value="cash">Cash</option>
+        <option value="ewallet">E-Wallet</option>
+        <option value="transfer_bank">Transfer Bank</option>
+    </select>
 
     <button type="submit">Hitung Biaya</button>
 </form>
